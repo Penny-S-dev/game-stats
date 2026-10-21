@@ -71,6 +71,25 @@ public class MapGameStatsCalculatorTest {
     // Assert
     assertThrows(NoSuchElementException.class, act);
   }
+  @Test void gameCountHasOnePerson(){
+    String scoreData = "Nupur 10\n";
+
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    int actual = calculator.gameCount("Nupur");
+
+    assertEquals(1,actual);
+  } 
+
+  @Test void gameCountNegativeScore(){
+    String scoreData = "Nupur -10\n";
+
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    int actual = calculator.gameCount("Nupur");
+
+    assertEquals(1,actual);
+  }
 
   // highScore tests
 
