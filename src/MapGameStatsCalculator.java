@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class MapGameStatsCalculator implements GameStatsCalculator {
 
@@ -19,6 +20,7 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
    * }
    */
   private Map<String, Integer> gameCounts;
+  private Map<String, List<Integer>> gameScores;
 
   // For some waves you will need to add more private instance variables here!
   
@@ -26,16 +28,24 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
 
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
-
+    gameScores = new HashMap<>();
+    List<Integer> scoreholder = new ArrayList<>();
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
       if(!gameCounts.containsKey(name)){
+        
+        scoreholder.add(score);
           gameCounts.put(name,1);
+          gameScores.put(name, scoreholder);
       }
       else{
         gameCounts.put(name,gameCounts.get(name)+1);
+        scoreholder = gameScores.get(name);
+        scoreholder.add(score);
+        gameScores.put(name,scoreholder);
       }
+
 
       // TODO: add logic here to use the name and score to fill your map(s)!
     }
@@ -68,10 +78,19 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public int highScore(String person) {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highScore'");
+    //throw new UnsupportedOperationException("Unimplemented method 'highScore'");
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkPerson(person);
+    checkPerson(person);
+    List<Integer> scores = new ArrayList<>();
+    scores = gameScores.get(person);
+    int highscore = scores.get(0);
+    for(int i:scores){
+      if(scores.get(i)>highscore){
+        highscore = scores.get(i);
+      }
+    }
+    return highscore;
   }
 
   /**
