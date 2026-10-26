@@ -151,10 +151,23 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   @Override
   public String highestAverageScorer() {
     // TODO: remove this exception once you have implemented your method!
-    throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
+    //throw new UnsupportedOperationException("Unimplemented method 'highestAverageScorer'");
 
     // Uncomment this and have it as your first line once you remove the UnsupportedOperationException
-    //checkScoreData();
+    checkScoreData();
+    Map<String, Double> avgScores= new HashMap<>();
+    String winner ="";
+    Double highest = 0.0;
+    for(String key:gameScores.keySet()){
+        avgScores.put(key,getAverageScore(key));
+    }
+    for(String key:avgScores.keySet()){
+        if(avgScores.get(key)>highest||highest == 0.0){
+          highest = avgScores.get(key);
+          winner = key;
+        }
+    }
+    return winner;
   }
 
   /**
