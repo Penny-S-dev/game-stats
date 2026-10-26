@@ -29,23 +29,18 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
   public MapGameStatsCalculator(Scanner scoreInput) {
     gameCounts = new HashMap<>();
     gameScores = new HashMap<>();
-    List<Integer> scoreholder = new ArrayList<>();
     while(scoreInput.hasNext()) {
       String name = scoreInput.next();
       int score = scoreInput.nextInt();
-      if(!gameCounts.containsKey(name)){
-        
-        scoreholder.add(score);
-          gameCounts.put(name,1);
-          gameScores.put(name, scoreholder);
+      if(!gameCounts.containsKey(name)){       
+        gameCounts.put(name,1);
+        gameScores.put(name, new ArrayList<Integer>());
+        gameScores.get(name).add(score);
       }
       else{
         gameCounts.put(name,gameCounts.get(name)+1);
-        scoreholder = gameScores.get(name);
-        scoreholder.add(score);
-        gameScores.put(name,scoreholder);
+        gameScores.get(name).add(score);
       }
-
 
       // TODO: add logic here to use the name and score to fill your map(s)!
     }
@@ -86,8 +81,8 @@ public class MapGameStatsCalculator implements GameStatsCalculator {
     scores = gameScores.get(person);
     int highscore = scores.get(0);
     for(int i:scores){
-      if(scores.get(i)>highscore){
-        highscore = scores.get(i);
+      if(i>highscore){
+        highscore = i;
       }
     }
     return highscore;
