@@ -207,6 +207,24 @@ public class MapGameStatsCalculatorTest {
     assertThrows(NoSuchElementException.class, act);
   }
 
+  @Test void highestScorerNegativeScores(){
+    String scoreData = "Nupur -10\n"
+        + "Baya -30\n"
+        + "Xinting -25\n"
+        + "Nupur -40\n"
+        + "Baya -50\n"
+        + "Nupur -20\n"
+        + "Baya -60\n"
+        + "Nupur -30\n";
+    GameStatsCalculator calculator = new MapGameStatsCalculator(new Scanner(scoreData));
+
+    // Act
+    String actual = calculator.highestScorer();
+
+    // Assert
+    assertEquals("Nupur", actual);
+  }
+
   // getAverageScore tests
 
   @Test
